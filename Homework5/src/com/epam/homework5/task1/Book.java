@@ -55,6 +55,7 @@ public class Book {
     }
 
     public void viewBook() {
-        System.out.println("Book ID = " + id + ", name= " + name + ", author=" + author + ", publisher=" + publisher + ", year =" + year + ", pages =" + pages);
+            System.out.println("Book ID = " + id + ", name= " + name + ", author=" + author + ", publisher=" + publisher + ", year =" + year + ", pages =" + pages + ", price = " + price);
     }
 }
+

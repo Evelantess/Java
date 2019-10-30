@@ -6,57 +6,66 @@ import java.util.Arrays;
  * Created by Tetiana_Moskalenko on 10/28/2019.
  */
 public class Books {
-    private Book [] bookArray;
+    private Book[] booksArray;
+    private int counter = 0;
 
-    public Books(int books) {
-        Book[] bookArray = new Book[books];
+    public int getCounter() {
+        return counter;
     }
 
-    public static Book[] addBooks(Book[] bookArray, Book book) {
-        Book[] res = new Book[bookArray.length];
-        int counter = bookArray.length + 1;
-        res = new Book[counter];
-        res[counter] = book;
-        return res;
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 
-    public static void printBooks(Book[] array) {
-        if (array.length == 0) {
+    public Books(int booksAmount) {
+        this.booksArray = new Book[booksAmount];
+    }
+
+    public void printBooks() {
+        if (counter == 0) {
             System.out.println("No books");
         } else {
-            for (Book elem: array) {
-                elem.viewBook();
+            for (int i = 0; i < counter; i++){
+                    booksArray[i].viewBook();
+                }
             }
         }
-    }
 
-    public static void priceChange(Book[] array, int percent) {
-        int price = 0;
-        for (Book elem: array) {
-            elem.setPrice(elem.getPrice() * percent);
+    public boolean addBook (Book book) {
+        if (counter == booksArray.length) {
+            return false;
+        } else {
+            booksArray[counter] = book;
+            setCounter(counter += 1);
+            return true;
         }
     }
 
-    public static Book[] searchBook (Book[] books, String author){
-        Book[] res = new Book[books.length];
-        int counter = 0;
-        for (Book elem: books) {
-            if (elem.getAuthor().equals(author)) {
-                res[counter++] = elem;
+    public void priceChange(int percent) {
+        for (int i = 0; i < counter; i++) {
+            booksArray[i].setPrice(booksArray[i].getPrice() + (booksArray[i].getPrice() * percent / 100));
+        }
+    }
+
+    public void searchBook (String author) {
+        Books res = new Books(counter);
+        for (int i = 0; i < counter; i++) {
+            if (booksArray[i].getAuthor().equalsIgnoreCase(author)) {
+                res.addBook(booksArray[i]);
             }
         }
-        return Arrays.copyOf(res, counter);
+        System.out.println("Search result:");
+        res.printBooks();
     }
 
-    public static Book[] searchBook (Book[] books, int year){
-        Book[] res = new Book[books.length];
-        int counter = 0;
-        for (Book elem: books) {
-            if (elem.getYear() > year) {
-                res[counter++] = elem;
+    public void searchBook (int year) {
+        Books res = new Books(counter);
+        for (int i = 0; i < counter; i++) {
+            if (booksArray[i].getYear() > year) {
+                res.addBook(booksArray[i]);
             }
         }
-        return Arrays.copyOf(res, counter);
+        System.out.println("Search result:");
+        res.printBooks();
     }
-
 }
